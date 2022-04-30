@@ -11,9 +11,11 @@ class PostListFragment: BaseFragment() {
 
     private lateinit var postRecyclerView: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var viewModel: PostListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(PostListViewModel::class.java)
     }
 
     override fun getLayout(): Int = R.layout.post_list_fragment
