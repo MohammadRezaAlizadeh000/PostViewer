@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-night/card_view_shape.xml" value="0.298" />
+        <entry key="app/src/main/res/drawable-notnight/card_view_shape.xml" value="0.298" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/post_dialog_layout.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/post_list_fragment.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/post_list_recycerview_row.xml" value="0.35625" />
       </map>
     </option>
   </component>
