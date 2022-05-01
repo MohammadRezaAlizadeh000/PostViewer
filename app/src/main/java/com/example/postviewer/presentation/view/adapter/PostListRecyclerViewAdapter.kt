@@ -1,12 +1,12 @@
-package com.example.postviewer.view.adapter
+package com.example.postviewer.presentation.view.adapter
 
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.postviewer.R
-import com.example.postviewer.model.SinglePostModel
-import com.example.postviewer.utils.extensions.inflater
+import com.example.postviewer.domin.model.SinglePostModel
+import com.example.postviewer.presentation.utils.extensions.inflater
 
 class PostListRecyclerViewAdapter(
     private val clickListener: PostRecyclerViewOnClickListener
@@ -18,7 +18,6 @@ class PostListRecyclerViewAdapter(
             clear()
             addAll(newDataList)
         }
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(

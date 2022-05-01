@@ -1,8 +1,8 @@
-package com.example.postviewer.viewmodel
+package com.example.postviewer.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.postviewer.usecase.PostListUseCase
+import com.example.postviewer.domin.usecase.PostListUseCase
 
 
 class PostListViewModelFactory(private val useCase: PostListUseCase) : ViewModelProvider.Factory {

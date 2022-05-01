@@ -1,4 +1,4 @@
-package com.example.postviewer.utils
+package com.example.postviewer.presentation.utils
 
 sealed class RequestState<T>(val data: T? = null, val message: String? = null) {
 

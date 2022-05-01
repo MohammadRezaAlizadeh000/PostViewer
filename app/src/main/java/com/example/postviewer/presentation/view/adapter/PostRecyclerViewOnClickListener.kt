@@ -1,4 +1,4 @@
-package com.example.postviewer.view.adapter
+package com.example.postviewer.presentation.view.adapter
 
 interface PostRecyclerViewOnClickListener {
 

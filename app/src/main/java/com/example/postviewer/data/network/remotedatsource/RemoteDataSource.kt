@@ -1,9 +1,9 @@
-package com.example.postviewer.data.remotedatsource
+package com.example.postviewer.data.network.remotedatsource
 
 import com.example.postviewer.data.mapper.PostsListMapper
 import com.example.postviewer.data.network.PostViewerAPIService
-import com.example.postviewer.model.SinglePostModel
-import com.example.postviewer.utils.RequestState
+import com.example.postviewer.domin.model.SinglePostModel
+import com.example.postviewer.presentation.utils.RequestState
 
 class RemoteDataSource(
     private val postViewerAPIService: PostViewerAPIService,

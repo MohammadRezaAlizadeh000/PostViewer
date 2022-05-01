@@ -1,9 +1,9 @@
-package com.example.postviewer.utils.extensions
+package com.example.postviewer.presentation.utils.extensions
 
 import android.util.Log
 import com.example.postviewer.data.mapper.BasicMapper
-import com.example.postviewer.utils.RequestErrorHandler
-import com.example.postviewer.utils.RequestState
+import com.example.postviewer.presentation.utils.RequestErrorHandler
+import com.example.postviewer.presentation.utils.RequestState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

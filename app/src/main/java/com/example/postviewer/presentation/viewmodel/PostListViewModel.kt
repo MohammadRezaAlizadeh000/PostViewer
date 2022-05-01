@@ -1,10 +1,10 @@
-package com.example.postviewer.viewmodel
+package com.example.postviewer.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.postviewer.model.SinglePostModel
-import com.example.postviewer.usecase.PostListUseCase
-import com.example.postviewer.utils.RequestState
+import com.example.postviewer.domin.model.SinglePostModel
+import com.example.postviewer.domin.usecase.PostListUseCase
+import com.example.postviewer.presentation.utils.RequestState
 import kotlinx.coroutines.*
 
 class PostListViewModel(private val useCase: PostListUseCase): ViewModel() {

@@ -1,8 +1,8 @@
-package com.example.postviewer.data.remotedatsource
+package com.example.postviewer.data.network.remotedatsource
 
 
 import com.example.postviewer.data.mapper.BasicMapper
-import com.example.postviewer.utils.RequestState
+import com.example.postviewer.presentation.utils.RequestState
 import retrofit2.Response
 
 interface RemoteDataSourceHelper {

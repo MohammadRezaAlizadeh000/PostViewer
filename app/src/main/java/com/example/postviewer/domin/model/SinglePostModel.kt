@@ -1,4 +1,4 @@
-package com.example.postviewer.model
+package com.example.postviewer.domin.model
 
 data class SinglePostModel(
     val postId: Int,

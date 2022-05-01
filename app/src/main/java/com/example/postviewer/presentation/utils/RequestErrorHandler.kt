@@ -1,4 +1,4 @@
-package com.example.postviewer.utils
+package com.example.postviewer.presentation.utils
 
 object RequestErrorHandler {
     private val errorsMessages = mutableMapOf<Int, String>().apply {

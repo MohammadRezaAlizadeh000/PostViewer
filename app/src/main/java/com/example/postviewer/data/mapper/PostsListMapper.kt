@@ -1,7 +1,7 @@
 package com.example.postviewer.data.mapper
 
 import com.example.postviewer.data.model.SinglePostResponseModel
-import com.example.postviewer.model.SinglePostModel
+import com.example.postviewer.domin.model.SinglePostModel
 
 object PostsListMapper:
     BasicMapper<List<SinglePostResponseModel>, List<SinglePostModel>> {

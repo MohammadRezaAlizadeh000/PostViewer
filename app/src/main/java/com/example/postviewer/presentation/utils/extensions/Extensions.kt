@@ -1,7 +1,5 @@
-package com.example.postviewer.utils.extensions
+package com.example.postviewer.presentation.utils.extensions
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.postviewer.R
-import com.example.postviewer.utils.FRAGMENT_CONTAINER
+import com.example.postviewer.presentation.utils.FRAGMENT_CONTAINER
 
 fun ViewGroup.inflater(layout: Int): View {
     return LayoutInflater.from(this.context).inflate(layout, this, false)
