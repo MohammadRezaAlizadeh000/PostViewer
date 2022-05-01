@@ -1,30 +1,29 @@
 package com.example.postviewer.di
 
 import android.content.Context
-import com.example.postviewer.data.remotedatsource.RemoteDataSource
-import com.example.postviewer.data.remotedatsource.RemoteDataSourceHelper
-import com.example.postviewer.data.remotedatsource.RemoteDataSourceHelperImpl
-import com.example.postviewer.data.Repository
+import androidx.lifecycle.ViewModelProvider
+import com.example.postviewer.data.network.remotedatsource.RemoteDataSource
+import com.example.postviewer.data.network.remotedatsource.RemoteDataSourceHelper
+import com.example.postviewer.data.network.remotedatsource.RemoteDataSourceHelperImpl
+import com.example.postviewer.data.repository.Repository
 import com.example.postviewer.data.network.PostViewerAPIService
-import com.example.postviewer.utils.BASE_URL
+import com.example.postviewer.domin.usecase.PostListUseCaseImpl
+import com.example.postviewer.presentation.utils.BASE_URL
+import com.example.postviewer.presentation.viewmodel.PostListViewModelFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class AppServiceLocator(
+class AppDependenciesContainer(
     private val applicationContext : Context
 ) {
 
     private var retrofit: Retrofit? = null
     private var gsonConvertorFactory: GsonConverterFactory? = null
     private var okHttpClient: OkHttpClient? = null
-    private var remoteDataSource: RemoteDataSource? = null
     private var remoteDataSourceHelperImpl: RemoteDataSourceHelper? = null
-    private var repository: Repository? = null
-//    private var applicationContext: Context? = null
-
-
+    private var apiService: PostViewerAPIService? = null
 
 
     private fun provideGsonConvertorFactory(): GsonConverterFactory {
@@ -55,7 +54,9 @@ class AppServiceLocator(
     }
 
     private fun getPostViewerAPIService(): PostViewerAPIService {
-        return provideRetrofit().create(PostViewerAPIService::class.java)
+        if (apiService == null)
+             apiService = provideRetrofit().create(PostViewerAPIService::class.java)
+        return apiService!!
     }
 
     private fun remoteDataSourceHelper(): RemoteDataSourceHelper {
@@ -66,15 +67,15 @@ class AppServiceLocator(
     }
 
     private fun provideRemoteDataSource(): RemoteDataSource {
-        if (remoteDataSource == null)
-            remoteDataSource = RemoteDataSource(getPostViewerAPIService(), remoteDataSourceHelper())
-        return remoteDataSource!!
+        return RemoteDataSource(getPostViewerAPIService(), remoteDataSourceHelper())
     }
 
-    fun provideRepository(): Repository {
-        if (repository == null)
-            repository = Repository(provideRemoteDataSource())
-        return repository!!
+    private fun provideRepository(): Repository {
+        return Repository(provideRemoteDataSource())
+    }
+
+    fun providePostListViewModelFactory(): ViewModelProvider.Factory {
+        return PostListViewModelFactory(PostListUseCaseImpl(provideRepository()))
     }
 
 }

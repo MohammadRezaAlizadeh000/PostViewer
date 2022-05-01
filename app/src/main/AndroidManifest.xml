@@ -14,7 +14,7 @@
         android:name=".di.MyApplication"
         android:theme="@style/Theme.PostViewer">
         <activity
-            android:name=".view.MainActivity"
+            android:name="com.example.postviewer.presentation.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
