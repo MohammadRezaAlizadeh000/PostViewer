@@ -1,14 +1,11 @@
-package com.example.postviewer
+package com.example.postviewer.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.postviewer.model.SinglePostModel
 import com.example.postviewer.usecase.PostListUseCase
 import com.example.postviewer.utils.RequestState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class PostListViewModel(private val useCase: PostListUseCase): ViewModel() {
 
@@ -16,7 +13,10 @@ class PostListViewModel(private val useCase: PostListUseCase): ViewModel() {
     val postLiveData: MutableLiveData<RequestState<List<SinglePostModel>>> = MutableLiveData()
 
     fun getAllPosts() = viewModelScope.launch {
-        useCase.getAllPosts()
+        val result = useCase.getAllPosts()
+        withContext(Dispatchers.Main) {
+            postLiveData.value = result
+        }
     }
 
     override fun onCleared() {
