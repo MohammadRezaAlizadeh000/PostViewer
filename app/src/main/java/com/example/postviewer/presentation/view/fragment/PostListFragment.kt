@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,14 +22,16 @@ import com.example.postviewer.presentation.utils.extensions.postsRecyclerViewDia
 import com.example.postviewer.presentation.utils.extensions.toast
 import com.example.postviewer.presentation.view.adapter.PostListRecyclerViewAdapter
 import com.example.postviewer.presentation.view.adapter.PostRecyclerViewOnClickListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
+@AndroidEntryPoint
 class PostListFragment : BaseFragment() {
 
     private lateinit var postRecyclerView: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var searchBox: EditText
-    private lateinit var viewModel: PostListViewModel
+    private val viewModel: PostListViewModel by viewModels()
     private val postsDataList = mutableListOf<SinglePostModel>()
     private val postsSearchedList = mutableListOf<SinglePostModel>()
 
@@ -40,13 +43,7 @@ class PostListFragment : BaseFragment() {
         })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(
-            this,
-            dependenciesContainer?.providePostListViewModelFactory()!!
-        ).get(PostListViewModel::class.java)
-    }
+
 
     override fun getLayout(): Int = R.layout.post_list_fragment
 

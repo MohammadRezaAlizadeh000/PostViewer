@@ -5,18 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.postviewer.di.AppDependenciesContainer
 import com.example.postviewer.di.MyApplication
 import com.example.postviewer.presentation.utils.extensions.inflater
 
 abstract class BaseFragment : Fragment() {
-
-    var dependenciesContainer: AppDependenciesContainer? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        dependenciesContainer = (requireActivity().application as MyApplication).getDependenciesContainer()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +36,4 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun initObservers()
 
-    override fun onDestroy() {
-        super.onDestroy()
-        dependenciesContainer = null
-        System.gc()
-    }
 }

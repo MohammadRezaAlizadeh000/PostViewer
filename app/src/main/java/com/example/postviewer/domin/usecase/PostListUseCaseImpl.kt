@@ -5,8 +5,9 @@ import com.example.postviewer.domin.model.SinglePostModel
 import com.example.postviewer.presentation.utils.RequestState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class PostListUseCaseImpl(
+class PostListUseCaseImpl @Inject constructor(
     private val repository: RepositoryAccess
 ): PostListUseCase {
 

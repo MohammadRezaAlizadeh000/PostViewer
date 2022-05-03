@@ -4,8 +4,9 @@ import com.example.postviewer.data.mapper.PostsListMapper
 import com.example.postviewer.data.network.PostViewerAPIService
 import com.example.postviewer.domin.model.SinglePostModel
 import com.example.postviewer.presentation.utils.RequestState
+import javax.inject.Inject
 
-class RemoteDataSource(
+class RemoteDataSource @Inject constructor(
     private val postViewerAPIService: PostViewerAPIService,
     private val helper: RemoteDataSourceHelper
 ) {
