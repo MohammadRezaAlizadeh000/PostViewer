@@ -7,11 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class PostListUseCaseImpl(
-    private val repository: RepositoryAccess?
+    private val repository: RepositoryAccess
 ): PostListUseCase {
 
     override suspend fun getAllPosts(): RequestState<List<SinglePostModel>> {
-        return repository?.getAllPosts()!!
+        return repository.getAllPosts()
     }
 
     override suspend fun filterPostsList(filterExpression: String, postsList: List<SinglePostModel>): RequestState<List<SinglePostModel>> {

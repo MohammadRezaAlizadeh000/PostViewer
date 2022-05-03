@@ -1,14 +1,14 @@
-package com.example.postviewer
+package com.example.postviewer.postusecase
 
 import com.example.postviewer.domin.model.SinglePostModel
 import com.example.postviewer.domin.usecase.PostListUseCase
 import com.example.postviewer.domin.usecase.PostListUseCaseImpl
+import com.example.postviewer.postusecase.PostUseCaseFakeRepository
 import com.example.postviewer.presentation.utils.RequestState
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
-import org.mockito.Mockito.mock
 
 class PostListUseCaseImplTest {
 
@@ -16,7 +16,14 @@ class PostListUseCaseImplTest {
 
     @Before
     fun init() {
-        useCase = PostListUseCaseImpl(null)
+        useCase = PostListUseCaseImpl(PostUseCaseFakeRepository())
+    }
+
+    @Test
+    fun `getAllPosts function work properly` () = runBlocking {
+
+        assertTrue("test success", useCase.getAllPosts() is RequestState.Success<List<SinglePostModel>>)
+
     }
 
     @Test
