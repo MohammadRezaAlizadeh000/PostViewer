@@ -12,7 +12,7 @@ import retrofit2.Response
 fun <T, R> Response<T>.toRequestState(mapper: BasicMapper<T, R>): RequestState<R> {
     return if (this.isSuccessful) {
         if (this.body() != null) {
-            RequestState.Success(data = this.body()!!)
+//            RequestState.Success(data = this.body()!!)
             RequestState.Success(data = mapData(mapper, this.body()!!))
         } else {
             RequestState.Error(RequestErrorHandler.getErrorMessage(this.code()))
@@ -65,6 +65,6 @@ fun <T> Call<T>.toRequestState(result: (state: RequestState<T>) -> Unit) {
 
 }
 
-private fun <T, R> mapData(mapper: BasicMapper<T, R>, oldDAta: T): R {
+fun <T, R> mapData(mapper: BasicMapper<T, R>, oldDAta: T): R {
     return mapper.map(oldDAta)
 }

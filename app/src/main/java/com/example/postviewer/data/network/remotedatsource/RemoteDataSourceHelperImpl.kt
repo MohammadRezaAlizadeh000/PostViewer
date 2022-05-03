@@ -14,19 +14,6 @@ class RemoteDataSourceHelperImpl(
     private val context: Context
 ) : RemoteDataSourceHelper {
 
-
-//    override fun <T> getCallback(requestFunction: () -> Call<T>): RequestState<T> {
-//        return RequestState<T> { emitter ->
-//            try {
-//                requestFunction().toAppState {
-//                    emitter.onSuccess(it)
-//                }
-//            } catch (e: Exception) {
-//                emitter.onError(e)
-//            }
-//        }.subscribeOn(Schedulers.io())
-//    }
-
     override suspend fun <T, R> getResponse(
         requestFunction: suspend () -> Response<T>,
         mapper: BasicMapper<T, R>
@@ -42,23 +29,7 @@ class RemoteDataSourceHelperImpl(
         }
     }
 
-    /*override suspend fun <T, R> getCallback(
-        requestFunction: suspend () -> Call<T>,
-        mapper: BasicMapper<T, R>
-    ): RequestState<R> {
-        try {
-            if (checkInternetConnection()) {
-                requestFunction()
-                    .toRequestState({
-                        it
-                    }, mapper)
-            } else
-                return RequestState.Error<R>("اینترنت خود را چک کنید")
-        } catch (e: Exception) {
-            return RequestState.Error<R>(e.message.toString())
-        }
-    }
-*/
+
     private fun checkInternetConnection(): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
