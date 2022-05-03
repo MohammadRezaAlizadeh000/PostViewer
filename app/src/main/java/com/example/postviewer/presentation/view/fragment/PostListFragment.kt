@@ -14,7 +14,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.postviewer.presentation.viewmodel.PostListViewModel
 import com.example.postviewer.R
 import com.example.postviewer.domin.model.SinglePostModel
+import com.example.postviewer.presentation.utils.REQUEST_CALLED
 import com.example.postviewer.presentation.utils.RequestState
+import com.example.postviewer.presentation.utils.SEARCH_CALLED
 import com.example.postviewer.presentation.utils.extensions.postsRecyclerViewDialog
 import com.example.postviewer.presentation.utils.extensions.toast
 import com.example.postviewer.presentation.view.adapter.PostListRecyclerViewAdapter
@@ -28,7 +30,7 @@ class PostListFragment : BaseFragment() {
     private lateinit var searchBox: EditText
     private lateinit var viewModel: PostListViewModel
     private val postsDataList = mutableListOf<SinglePostModel>()
-    private val mainCoroutine = CoroutineScope(Dispatchers.Main)
+    private val postsSearchedList = mutableListOf<SinglePostModel>()
 
     private val postListRecyclerViewAdapter: PostListRecyclerViewAdapter by lazy {
         PostListRecyclerViewAdapter(object : PostRecyclerViewOnClickListener {
@@ -50,7 +52,8 @@ class PostListFragment : BaseFragment() {
 
     override fun initViews(view: View) {
         postRecyclerView = view.findViewById<RecyclerView>(R.id.postsRecyclerView).apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
         swipeRefresh = view.findViewById(R.id.postListFragmentSwipeRefresh)
         searchBox = view.findViewById(R.id.postSearchBox)
@@ -73,10 +76,9 @@ class PostListFragment : BaseFragment() {
             }
         })
 
-        searchBoxAction()
-
-
         getAllPosts()
+
+        searchBoxAction()
     }
 
     private fun searchBoxAction() {
@@ -86,9 +88,9 @@ class PostListFragment : BaseFragment() {
             }
 
             override fun onTextChanged(content: CharSequence?, start: Int, count: Int, after: Int) {
-                if (content!!.length > 2)  {
+                if (content!!.length > 2) {
                     Log.d("SEARCH_BOX_TAG", content.toString())
-                    reOrderDataList(content.toString())
+                    viewModel.filterPostsList(content.toString(), postsSearchedList)
                 }
             }
 
@@ -102,29 +104,15 @@ class PostListFragment : BaseFragment() {
         })
     }
 
-    private fun reOrderDataList(searchExpression: String) = mainCoroutine.launch {
-        val searchResult = withContext(Dispatchers.Default) {
-            val searchResult = mutableListOf<SinglePostModel>()
-            postsDataList.forEach {
-                if (it.postTitle.contains(searchExpression))
-                    searchResult.add(it)
-            }
-            return@withContext searchResult
-        }
-        setDatToRecyclerView(searchResult)
-    }
-
     private fun getAllPosts() {
         viewModel.getAllPosts()
     }
 
     private fun hideSearchBox() {
-//        searchBox.animate().translationY(-200F)
         searchBox.visibility = View.GONE
     }
 
     private fun showSearchBox() {
-//        searchBox.animate().translationY(0F)
         searchBox.visibility = View.VISIBLE
     }
 
@@ -139,30 +127,23 @@ class PostListFragment : BaseFragment() {
 
     override fun initObservers() {
         viewModel.postLiveData.observe(viewLifecycleOwner) { response ->
-            when(response) {
+            when (response) {
                 is RequestState.Error -> {
                     swipeRefresh.isRefreshing = false
-                    clearSearchBoxContent()
                     toast(response.message.toString())
                 }
                 is RequestState.Loading -> toast("در حال بارگیری اطلاعات...")
                 is RequestState.Success -> {
                     Log.d("REQUEST_TAG", "in fragment success")
-                    mainCoroutine.launch {
-                        showSearchBox()
-                        swipeRefresh.isRefreshing = false
-                        clearSearchBoxContent()
-//                        delay(200)
-                        // in the below function recyclerview call notifyDataSetChange() and this is
-                        // heavy function on Main Thread.
-                        // in other side swipe refresh layout is refreshing and we say it above to
-                        // disable it. this action work on Main Thread.
-                        // so when this to action happen at the same time it goes to lag for a second
-                        // or mil second. so we use a delay on Main Thread using coroutine to prevent
-                        // lag on ui
+                    showSearchBox()
+                    swipeRefresh.isRefreshing = false
+                    if (response.message != null && response.message == REQUEST_CALLED) {
                         postsDataList.addAll(response.data!!)
-                        setDatToRecyclerView(response.data)
-                    }
+                        postsSearchedList.addAll(response.data)
+                        clearSearchBoxContent()
+                    } else if (response.message == SEARCH_CALLED)
+                        postsSearchedList.addAll(response.data!!)
+                    setDatToRecyclerView(response.data!!)
                 }
             }
         }

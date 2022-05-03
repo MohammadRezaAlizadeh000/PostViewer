@@ -19,6 +19,13 @@ class PostListViewModel(private val useCase: PostListUseCase): ViewModel() {
         }
     }
 
+    fun filterPostsList(filterExpression: String, postsList: List<SinglePostModel>) = viewModelScope.launch {
+        val result = useCase.filterPostsList(filterExpression, postsList)
+        withContext(Dispatchers.Main) {
+            postLiveData.value = result
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()

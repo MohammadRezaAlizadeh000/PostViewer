@@ -2,6 +2,7 @@ package com.example.postviewer.presentation.utils.extensions
 
 import android.util.Log
 import com.example.postviewer.data.mapper.BasicMapper
+import com.example.postviewer.presentation.utils.REQUEST_CALLED
 import com.example.postviewer.presentation.utils.RequestErrorHandler
 import com.example.postviewer.presentation.utils.RequestState
 import retrofit2.Call
@@ -13,7 +14,7 @@ fun <T, R> Response<T>.toRequestState(mapper: BasicMapper<T, R>): RequestState<R
     return if (this.isSuccessful) {
         if (this.body() != null) {
 //            RequestState.Success(data = this.body()!!)
-            RequestState.Success(data = mapData(mapper, this.body()!!))
+            RequestState.Success(data = mapData(mapper, this.body()!!), REQUEST_CALLED)
         } else {
             RequestState.Error(RequestErrorHandler.getErrorMessage(this.code()))
         }
@@ -28,7 +29,7 @@ fun <T, R> Call<T>.toRequestState(result: (RequestState<R>) -> Unit, mapper: Bas
         override fun onResponse(call: Call<T>, response: Response<T>) {
             Log.d("REQUEST_TAG", "in getResponseCallback onResponse")
             if (response.body() != null) {
-                result(RequestState.Success(mapData(mapper, response.body()!!)))
+                result(RequestState.Success(mapData(mapper, response.body()!!), REQUEST_CALLED))
             } else {
                 result(RequestState.Error(RequestErrorHandler.getErrorMessage(response.code())))
             }
@@ -49,7 +50,7 @@ fun <T> Call<T>.toRequestState(result: (state: RequestState<T>) -> Unit) {
         override fun onResponse(call: Call<T>, response: Response<T>) {
             Log.d("REQUEST_TAG", "in getResponseCallback onResponse")
             if (response.body() != null) {
-                result(RequestState.Success(data = response.body()!!))
+                result(RequestState.Success(data = response.body()!!, REQUEST_CALLED))
             } else {
                 result(RequestState.Error(RequestErrorHandler.getErrorMessage(response.code())))
             }
