@@ -6,6 +6,7 @@ import com.example.postviewer.data.network.remotedatsource.RemoteDataSource
 import com.example.postviewer.data.network.remotedatsource.RemoteDataSourceHelper
 import com.example.postviewer.data.network.remotedatsource.RemoteDataSourceHelperImpl
 import com.example.postviewer.data.repository.Repository
+import com.example.postviewer.domin.remotedatasource.RemoteDataSourceAccess
 import com.example.postviewer.domin.repository.RepositoryAccess
 import com.example.postviewer.presentation.utils.BASE_URL
 import dagger.Module
@@ -40,7 +41,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(gsonConverterFactory: GsonConverterFactory, okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        gsonConverterFactory: GsonConverterFactory,
+        okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit
             .Builder()
             .baseUrl(BASE_URL)
@@ -58,6 +62,14 @@ object NetworkModule {
     @Provides
     fun provideRemoteDataSourceHelper(@ApplicationContext context: Context): RemoteDataSourceHelper {
         return RemoteDataSourceHelperImpl(context)
+    }
+
+    @Provides
+    fun provideRemoteDataSource(
+        postViewerAPIService: PostViewerAPIService,
+        remoteDataSourceHelper: RemoteDataSourceHelper
+    ): RemoteDataSourceAccess {
+        return RemoteDataSource(postViewerAPIService, remoteDataSourceHelper)
     }
 
 }
