@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.postviewer.R
 import com.example.postviewer.presentation.utils.FRAGMENT_CONTAINER
 
-fun ViewGroup.inflater(layout: Int): View {
+fun ViewGroup.inflate(layout: Int): View {
     return LayoutInflater.from(this.context).inflate(layout, this, false)
 }
 

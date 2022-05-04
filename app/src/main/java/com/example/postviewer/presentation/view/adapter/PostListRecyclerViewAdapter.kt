@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.postviewer.R
 import com.example.postviewer.domin.model.SinglePostModel
-import com.example.postviewer.presentation.utils.extensions.inflater
+import com.example.postviewer.presentation.utils.extensions.inflate
 
 class PostListRecyclerViewAdapter(
     private val clickListener: PostRecyclerViewOnClickListener
@@ -24,7 +24,7 @@ class PostListRecyclerViewAdapter(
         parent: ViewGroup,
         viewType: Int
     ): PostListHolder {
-        return PostListHolder(parent.inflater(R.layout.post_list_recycerview_row)).apply {
+        return PostListHolder(parent.inflate(R.layout.post_list_recycerview_row)).apply {
             itemView.setOnClickListener { clickListener.onPostClick(dataList[layoutPosition].postId) }
         }
     }

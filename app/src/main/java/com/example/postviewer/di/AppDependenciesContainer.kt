@@ -7,6 +7,7 @@ import com.example.postviewer.data.network.remotedatsource.RemoteDataSourceHelpe
 import com.example.postviewer.data.network.remotedatsource.RemoteDataSourceHelperImpl
 import com.example.postviewer.data.repository.Repository
 import com.example.postviewer.data.network.PostViewerAPIService
+import com.example.postviewer.domin.remotedatesource.RemoteDataSourceAccess
 import com.example.postviewer.domin.usecase.PostListUseCaseImpl
 import com.example.postviewer.presentation.utils.BASE_URL
 import com.example.postviewer.presentation.viewmodel.PostListViewModelFactory
@@ -66,7 +67,7 @@ class AppDependenciesContainer(
         return remoteDataSourceHelperImpl!!
     }
 
-    private fun provideRemoteDataSource(): RemoteDataSource {
+    private fun provideRemoteDataSource(): RemoteDataSourceAccess {
         return RemoteDataSource(getPostViewerAPIService(), remoteDataSourceHelper())
     }
 

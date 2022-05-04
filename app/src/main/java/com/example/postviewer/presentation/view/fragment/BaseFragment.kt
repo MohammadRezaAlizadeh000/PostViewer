@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.postviewer.di.AppDependenciesContainer
 import com.example.postviewer.di.MyApplication
-import com.example.postviewer.presentation.utils.extensions.inflater
+import com.example.postviewer.presentation.utils.extensions.inflate
 
 abstract class BaseFragment : Fragment() {
 
@@ -23,7 +23,7 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return container?.inflater(getLayout()) ?: LayoutInflater.from(container?.context)
+        return container?.inflate(getLayout()) ?: LayoutInflater.from(container?.context)
             .inflate(getLayout(), container, false)
     }
 
